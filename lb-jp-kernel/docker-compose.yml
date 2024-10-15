@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+  jupyter_worker_1:
+    build: .
+    container_name: jupyter_worker_1
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./workspace/worker_1:/workspace
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'  # 2 CPUs
+          memory: 2g    # 2 GB RAM
+          # reservations:
+          #   devices:
+          #     - capabilities: [gpu]
+    # runtime: nvidia  # Enables GPU runtime for this worker
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root
+
+  jupyter_worker_2:
+    build: .
+    container_name: jupyter_worker_2
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./workspace/worker_2:/workspace
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'  # 2 CPUs
+          memory: 2g    # 2 GB RAM
+          # reservations:
+          #   devices:
+          #     - capabilities: [gpu]
+    # runtime: nvidia  # Enables GPU runtime for this worker
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root
+
+  jupyter_worker_3:
+    build: .
+    container_name: jupyter_worker_3
+    ports:
+      - "8890:8888"
+    volumes:
+      - ./workspace/worker_3:/workspace
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'  # 2 CPUs
+          memory: 2g    # 2 GB RAM
+          # reservations:
+          #   devices:
+          #     - capabilities: [gpu]
+    # runtime: nvidia  # Enables GPU runtime for this worker
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root
+
+  jupyter_worker_4:
+    build: .
+    container_name: jupyter_worker_4
+    ports:
+      - "8891:8888"
+    volumes:
+      - ./workspace/worker_4:/workspace
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'  # 2 CPUs
+          memory: 2g    # 2 GB RAM
+          # reservations:
+          #   devices:
+          #     - capabilities: [gpu]
+    # runtime: nvidia  # Enables GPU runtime for this worker
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root
+
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:
